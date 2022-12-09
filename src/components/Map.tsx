@@ -1,9 +1,11 @@
 import { useMemo } from 'react'
 import GoogleMapReact from 'google-map-react'
+import { useVideoStore } from '../store/store'
 import Marker from './Marker'
 
 
 function Map() {
+  const videos = useVideoStore((state) => state.videos)
   const mapConfig = useMemo(() => {
     return {
       center: { lat: 12.2145033, lng: 20.8466341 },
@@ -21,7 +23,9 @@ function Map() {
         defaultZoom={mapConfig.zoom}
         yesIWantToUseGoogleMapApiInternals
       >
-        <Marker lat={-36.7847059} lng={174.7390844} />
+        {videos && videos.map((video) => (
+          <Marker key={video.id} lat={video.coords.lat} lng={video.coords.lng} video={video} />
+        ))}
       </GoogleMapReact>
     </main>
   )
