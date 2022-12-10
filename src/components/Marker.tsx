@@ -1,21 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import MarkerDetail from './MarkerDetail'
 
 
 function Marker({lat, lng, video}:{lat:number, lng:number, video:TVideo}) {
+  const markerRef = useRef<HTMLDivElement|null>(null)
   const [ toggleShow, setToggleShow ] = useState<boolean>(false)
 
   return (
-    <div>
-      {!toggleShow && (
-        <div onClick={() => setToggleShow(true)}>Show</div>
-      )}
+    <div className="relative">
+      <div 
+        ref={markerRef}
+        onMouseEnter={() => setToggleShow(true)}
+        onTouchStart={() => setToggleShow(true)}
+      >
+        Show
+      </div>
       
       {toggleShow && (
-        <div className="bg-slate-50 w-52 h-52">
-          <img src={`https://img.youtube.com/vi/${video.videoId}/default.jpg`} />
-          <p>{video.videoName}</p>
-          <button onClick={() => setToggleShow(false)}>X</button>
-        </div>
+        <MarkerDetail video={video} setToggleShow={setToggleShow} markerRef={markerRef} />
       )}
     </div>
   )
