@@ -13,7 +13,8 @@ declare global {
   }
   
   type TVideoStore = {
-    videoIdToShow: number | undefined
-    videos: TVideo[]
+    selectedVideo: TVideo | null
+    videos: TVideo[],
+    setSelectedVideoById: (id:number|null) => void
   }
 }
