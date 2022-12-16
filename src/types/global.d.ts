@@ -10,11 +10,17 @@ declare global {
       lat: number
       lng: number
     }
+    country: string
   }
   
   type TVideoStore = {
     selectedVideo: TVideo | null
-    videos: TVideo[],
+    videosAll: TVideo[]
+    videosFiltered: TVideo[]
+    filterValues: any
+    setInitialVideoState: () => void
     setSelectedVideoById: (id:number|null) => void
+    setInitialFilterValues: () => void
+    setFilteredVideos: (name:string, value:any) => void
   }
 }

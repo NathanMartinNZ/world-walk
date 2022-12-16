@@ -1,16 +1,21 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { useVideoStore } from '../store/store'
 import Marker from './Marker'
 
 
 function Map() {
-  const videos = useVideoStore((state) => state.videos)
+  const { setInitialVideoState } = useVideoStore()
+  const videos:TVideo[] = useVideoStore((state) => state.videosFiltered) 
   const mapConfig = useMemo(() => {
     return {
       center: { lat: 12.2145033, lng: 20.8466341 },
       zoom: 1
     }
+  }, [])
+
+  useEffect(() => {
+    setInitialVideoState()
   }, [])
 
   //TODO: Stop markers from glitching: https://github.com/giorgiabosello/google-maps-react-markers
